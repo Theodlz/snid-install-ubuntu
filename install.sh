@@ -2,15 +2,18 @@
 # it is meant to be cloned from github in a Dockerfile to install snid
 DEBS=('pgplot5_5.2.2-19.3build3_amd64.deb' 'pgplot5_5.2.2-19.3build3_arm64.deb') # only amd64 and arm64 are supported
 X11_PATH_OPTIONS=('/usr/lib/x86_64-linux-gnu' '/usr/lib/aarch64-linux-gnu')
+
 cmd=$(uname -a)
 deb=""
-X11_path="/usr/lib/x86_64-linux-gnu"
+X11_path=""
 
 # we select the deb to use depending on the architecture of the machine
 if [[ $cmd == *"x86_64"* ]]; then
     deb=${DEBS[0]}
+    X11_path=${X11_PATH_OPTIONS[0]}
 elif [[ $cmd == *"aarch64"* ]]; then
     deb=${DEBS[1]}
+    X11_path=${X11_PATH_OPTIONS[1]}
 fi
 
 # if we don't find a deb for this architecture, we exit
